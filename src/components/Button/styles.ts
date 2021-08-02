@@ -1,0 +1,30 @@
+import styled from 'styled-components';
+import { shade } from 'polished';
+
+export const Container = styled.button`
+  margin-top: 24px;
+  margin-bottom: 24px;
+  padding: 6px;
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+
+  font-size: 20px;
+
+  background: #fff;
+  color: #c2185b;
+
+  border-radius: 10px;
+  border: 2px solid #ec407a;
+  transition: background-color 0.2s;
+
+  &:hover {
+    background: ${shade(0.2, '#fff')};
+  }
+
+  svg {
+    margin-left: 115px;
+    margin-right: 12px;
+  }
+`;
