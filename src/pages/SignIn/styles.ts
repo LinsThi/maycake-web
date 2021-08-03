@@ -75,6 +75,10 @@ export const Baseboard = styled.div`
     text-decoration: none;
     color: #fff;
   }
+
+  @media (max-height: 510px) {
+    display: none;
+  }
 `;
 
 export const Background = styled.div`

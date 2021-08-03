@@ -21,11 +21,12 @@
   "rules": {
     "prettier/prettier": "off",
     "no-use-before-define": "off",
-    "react-hooks/rules-of-hooks": "error",
     "react-hooks/exhaustive-deps": "warn",
     "react/jsx-props-no-spreading": "off",
     "react/prop-types": "off",
     "no-console": "off",
+    "react-hooks/rules-of-hooks": "off",
+    "@typescript-eslint/ban-types": "off",
     "no-unused-vars": "off",
     "react/jsx-filename-extension": [1, { "extensions": [".tsx"] }],
     "import/prefer-default-export": "off",
