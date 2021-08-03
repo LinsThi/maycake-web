@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import backgroundSignIn from '../../assets/backgroundSignIn.png';
 
 export const Container = styled.div`
-  height: 93vh;
+  height: 100vh;
 
   display: flex;
   align-items: stretch;
@@ -23,8 +23,11 @@ export const Content = styled.div`
   }
 
   form {
-    margin: 50px 0;
-    width: 340px;
+    min-width: 280px;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    max-width: 340px;
     text-align: center;
 
     h1 {
@@ -61,7 +64,8 @@ export const Baseboard = styled.div`
   justify-content: center;
   flex-direction: column;
 
-  height: 7vh;
+  width: 100%;
+  height: 60px;
   background: #fa9898;
   color: #fff;
 

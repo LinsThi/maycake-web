@@ -20,11 +20,29 @@ export const Container = styled.button`
   transition: background-color 0.2s;
 
   &:hover {
-    background: ${shade(0.2, '#fff')};
+    background: ${shade(0.2, '#FFE1E3')};
   }
 
   svg {
     margin-left: 115px;
     margin-right: 12px;
+  }
+
+  @media (max-width: 400px) {
+    width: 98%;
+    margin-left: 1%;
+
+    svg {
+      margin-left: 35%;
+    }
+  }
+
+  @media (max-width: 380px) {
+    width: 90%;
+    margin-left: 5%;
+
+    svg {
+      margin-left: 33%;
+    }
   }
 `;
