@@ -1,14 +1,15 @@
 import React, { useCallback, useRef } from 'react';
-import { FiMail, FiKey } from 'react-icons/fi';
+import { FiMail, FiKey, FiUser } from 'react-icons/fi';
 import { BiLogInCircle } from 'react-icons/bi';
+import { AiOutlineIdcard } from 'react-icons/ai';
 import toast, { Toaster } from 'react-hot-toast';
 import { FormHandles } from '@unform/core';
 import { Form } from '@unform/web';
 import * as Yup from 'yup';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 
+import api from '../../services/api';
 import getValidationErrors from '../../utils/getValidationsError';
-import { useAuth } from '../../hooks/auth';
 
 import { Container, Content, Background, Baseboard } from './styles';
 import nameForm from '../../assets/nameForm.png';
@@ -17,6 +18,8 @@ import Input from '../../components/Input';
 import Button from '../../components/Button';
 
 interface FormData {
+  name: string;
+  cpf: string;
   email: string;
   password: string;
 }
@@ -24,13 +27,15 @@ interface FormData {
 const SignIn: React.FC = () => {
   const formRef = useRef<FormHandles>(null);
 
-  const { signIn } = useAuth();
+  const history = useHistory();
 
   const handleSubmit = useCallback(
     async (data: FormData) => {
       try {
         formRef.current?.setErrors({});
         const schema = Yup.object().shape({
+          name: Yup.string().required('Nome obrigatório'),
+          cpf: Yup.string().required('CPF Obrigatório'),
           email: Yup.string()
             .required('E-mail obrigatório')
             .email('Digite um e-mail válido'),
@@ -41,7 +46,16 @@ const SignIn: React.FC = () => {
           abortEarly: false,
         });
 
-        await signIn({ email: data.email, password: data.password });
+        await api.post('/users', {
+          name: data.name,
+          email: data.email,
+          cpf: data.cpf,
+          password: data.password,
+        });
+
+        toast.success('Usuário cadastrado com sucesso');
+
+        history.push('/');
       } catch (err) {
         console.clear();
         if (err instanceof Yup.ValidationError) {
@@ -49,11 +63,13 @@ const SignIn: React.FC = () => {
 
           formRef.current?.setErrors(errors);
         } else {
-          toast.error('E-mail/Password incorreto');
+          toast('Usuário já cadastrado com as credenciais', {
+            icon: '👀',
+          });
         }
       }
     },
-    [signIn],
+    [history],
   );
 
   return (
@@ -65,7 +81,15 @@ const SignIn: React.FC = () => {
 
           <Form onSubmit={handleSubmit} ref={formRef}>
             <Toaster position="top-center" reverseOrder={false} />
-            <h1>Faça seu Login</h1>
+            <h1>Faça seu Cadastro</h1>
+            <Input name="name" type="text" icon={FiUser} placeholder="Nome" />
+            <Input
+              name="cpf"
+              type="text"
+              pattern="\d{3}\.?\d{3}\.?\d{3}-?\d{2}"
+              icon={AiOutlineIdcard}
+              placeholder="CPF"
+            />
             <Input
               name="email"
               type="text"
@@ -82,9 +106,8 @@ const SignIn: React.FC = () => {
               Entrar
             </Button>
             <div id="down">
-              <a href="/#">Esqueci minha senha</a>
-              <Link to="/signup" id="alter">
-                Não tem conta? Crie uma clicando <strong>aqui</strong>
+              <Link to="/" id="alter">
+                Já tem uma conta? Faça o login clicando <strong>aqui</strong>
               </Link>
             </div>
           </Form>

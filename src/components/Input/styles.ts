@@ -19,7 +19,7 @@ export const Container = styled.div<ContainerProps>`
   align-items: center;
 
   & + div {
-    margin-top: 28px;
+    margin-top: 20px;
   }
 
   svg {
