@@ -1,5 +1,6 @@
 import React from 'react';
 import { FiUser, FiShoppingCart } from 'react-icons/fi';
+import { Toaster } from 'react-hot-toast';
 
 import appName from '../../assets/appName.png';
 
@@ -33,6 +34,7 @@ const Dashboard: React.FC = () => {
           </HeaderContent>
         </Header>
         <Products>
+          <Toaster position="top-center" reverseOrder={false} />
           <h1>Sou um produto</h1>
         </Products>
         <Nav>
