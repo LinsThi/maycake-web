@@ -1,5 +1,7 @@
-import React from 'react';
-import { FiUser, FiShoppingCart } from 'react-icons/fi';
+import React, { useState, useEffect, useCallback } from 'react';
+import { FiUser, FiShoppingCart, FiLogOut } from 'react-icons/fi';
+import { AiOutlineCloseCircle } from 'react-icons/ai';
+import { BsBell } from 'react-icons/bs';
 import { Toaster } from 'react-hot-toast';
 
 import appName from '../../assets/appName.png';
@@ -11,24 +13,109 @@ import {
   Config,
   Products,
   Nav,
+  Notifications,
   Baseboard,
 } from './styles';
+import { useAuth } from '../../hooks/auth';
+
+import api from '../../services/api';
+
+interface NotificationData {
+  id: string;
+  title: string;
+  content: string;
+  recipient_id: string;
+  read: boolean;
+}
 
 const Dashboard: React.FC = () => {
+  const { signOut } = useAuth();
+  const [notificationData, setNotificationData] = useState<NotificationData[]>(
+    [],
+  );
+  const [notifyShow, setNotifyShow] = useState(false);
+
+  const handleSetNotifyShow = useCallback(() => {
+    setNotifyShow(!notifyShow);
+  }, [notifyShow]);
+
+  const handleSetReadNotification = useCallback(
+    (id) => {
+      api
+        .patch('/notifications/update', {
+          id,
+        })
+        .then((response) => {
+          setNotificationData(
+            notificationData.filter(
+              (notification) => notification.id !== response.data.read,
+            ),
+          );
+        });
+    },
+    [notificationData],
+  );
+
+  useEffect(() => {
+    api.get('/notifications/show').then((response) => {
+      const notifications: NotificationData[] = response.data;
+
+      setNotificationData(
+        notifications.filter((notification) => !notification.read),
+      );
+
+      if (notificationData.length === 0) {
+        setNotifyShow(false);
+      }
+    });
+  }, [notificationData]);
+
   return (
     <>
       <Container>
         <Header>
           <HeaderContent>
             <img src={appName} alt="MayCake" />
-            <Config>
-              <span>Inicio</span>
-              <span>Categoria</span>
+            <Config notifyShow={notifyShow}>
+              <div>
+                <button
+                  type="button"
+                  className="notify"
+                  onClick={handleSetNotifyShow}
+                >
+                  <BsBell size={20} color="#c2185b" />
+                  {notificationData.length !== 0 && !notifyShow && (
+                    <span>{notificationData.length}</span>
+                  )}
+                </button>
+                <div className="div-notify">
+                  {notifyShow &&
+                    notificationData.map((notification) => (
+                      <Notifications key={notification.id}>
+                        <div>
+                          <strong>{notification.title}</strong>
+                          <h5>{notification.content}</h5>
+                        </div>
+                        <button
+                          type="button"
+                          onClick={() =>
+                            handleSetReadNotification(notification.id)
+                          }
+                        >
+                          <AiOutlineCloseCircle size={20} color="#5F4CEC" />
+                        </button>
+                      </Notifications>
+                    ))}
+                </div>
+              </div>
               <button type="button">
-                <FiShoppingCart />
+                <FiShoppingCart size={20} color="#c2185b" />
               </button>
-              <button type="button">
-                <FiUser />
+              <a href="/profile">
+                <FiUser size={20} color="#c2185b" />
+              </a>
+              <button type="button" onClick={() => signOut()}>
+                <FiLogOut size={20} color="#c2185b" />
               </button>
             </Config>
           </HeaderContent>
@@ -41,10 +128,7 @@ const Dashboard: React.FC = () => {
           <img src={appName} alt="MayCake" />
           <ul>
             <li>
-              <a href="/dashboard">Inicio</a>
-            </li>
-            <li>
-              <a href="/#">Categoria</a>
+              <a href="https://www.instagram.com/mayah.png/">Contato</a>
             </li>
             <li>
               <a href="/carrinho">Carrinho</a>
