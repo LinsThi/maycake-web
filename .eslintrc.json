@@ -27,6 +27,8 @@
     "no-console": "off",
     "react-hooks/rules-of-hooks": "off",
     "camelcase": "off",
+    "no-underscore-dangle": "off",
+    "no-nested-ternary": "off",
     "@typescript-eslint/ban-types": "off",
     "no-unused-vars": "off",
     "react/jsx-filename-extension": [1, { "extensions": [".tsx"] }],

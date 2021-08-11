@@ -103,7 +103,7 @@ const SignIn: React.FC = () => {
               placeholder="Senha"
             />
             <Button type="submit" icon={BiLogInCircle}>
-              Entrar
+              Cadastrar
             </Button>
             <div id="down">
               <Link to="/" id="alter">
