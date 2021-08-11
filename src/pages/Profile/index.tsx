@@ -6,7 +6,7 @@ import toast, { Toaster } from 'react-hot-toast';
 import { FormHandles } from '@unform/core';
 import { Form } from '@unform/web';
 import * as Yup from 'yup';
-import { useHistory, Redirect, Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 import api from '../../services/api';
 import getValidationErrors from '../../utils/getValidationsError';
