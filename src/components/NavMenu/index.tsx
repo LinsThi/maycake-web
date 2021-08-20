@@ -5,6 +5,7 @@ import { Div, Container } from './styles';
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   icon: React.ComponentType<IconBaseProps>;
+  isFirst?: boolean;
 }
 
 const Button: React.FC<ButtonProps> = ({ children, icon: Icon }) => {

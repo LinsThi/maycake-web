@@ -1,138 +1,40 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import { FiUser, FiLogOut } from 'react-icons/fi';
-import { AiOutlineCloseCircle } from 'react-icons/ai';
-import { BsBell, BsBook } from 'react-icons/bs';
+import React, { useState, useCallback } from 'react';
+import { FiBookOpen, FiFilePlus } from 'react-icons/fi';
 import { BiFoodMenu } from 'react-icons/bi';
-import { Toaster } from 'react-hot-toast';
 
-import appName from '../../assets/appName.png';
+import { Container, Menu, Content, Baseboard } from './styles';
 
-import {
-  Container,
-  Menu,
-  Content,
-  Config,
-  Products,
-  Notifications,
-  Baseboard,
-} from './styles';
-import { useAuth } from '../../hooks/auth';
-
+import FoodOrders from './FoodOrders';
 import NavMenu from '../../components/NavMenu';
-import api from '../../services/api';
-
-interface NotificationData {
-  id: string;
-  title: string;
-  content: string;
-  recipient_id: string;
-  read: boolean;
-}
 
 const adminPage: React.FC = () => {
-  const { signOut } = useAuth();
-  const [notificationData, setNotificationData] = useState<NotificationData[]>(
-    [],
-  );
-  const [notifyShow, setNotifyShow] = useState(false);
+  const [optionSelected, setOptionSelected] = useState(0);
 
-  const handleSetNotifyShow = useCallback(() => {
-    setNotifyShow(!notifyShow);
-  }, [notifyShow]);
-
-  const handleSetReadNotification = useCallback(
-    (id) => {
-      api
-        .patch('/notifications/update', {
-          id,
-        })
-        .then((response) => {
-          setNotificationData(
-            notificationData.filter(
-              (notification) => notification.id !== response.data.read,
-            ),
-          );
-        });
-    },
-    [notificationData],
-  );
-
-  useEffect(() => {
-    api.get('/notifications/show').then((response) => {
-      const notifications: NotificationData[] = response.data;
-
-      setNotificationData(
-        notifications.filter((notification) => !notification.read),
-      );
-
-      if (notificationData.length === 0) {
-        setNotifyShow(false);
-      }
-    });
-  }, [notificationData]);
-
+  const handleOptionSelected = useCallback((number) => {
+    setOptionSelected(number);
+  }, []);
   return (
     <>
       <Container>
         <Menu>
           <div className="menuIcons">
-            <NavMenu icon={BiFoodMenu}>Pedidos</NavMenu>
+            <button type="button" onClick={() => handleOptionSelected(1)}>
+              <NavMenu icon={BiFoodMenu}>Pedidos</NavMenu>
+            </button>
 
-            <NavMenu icon={BsBook}>Cardápio</NavMenu>
-          </div>
-          <div className="option">
-            <img src={appName} alt="MayCake" />
+            <button type="button" onClick={() => handleOptionSelected(2)}>
+              <NavMenu icon={FiBookOpen}>Cardápio</NavMenu>
+            </button>
 
-            <div>
-              <span>Agora</span>
-              <span>Encomendas</span>
-            </div>
+            <button type="button" onClick={() => handleOptionSelected(3)}>
+              <NavMenu icon={FiFilePlus}>Cadastro</NavMenu>
+            </button>
           </div>
         </Menu>
         <Content>
-          <Products>
-            <Config notifyShow={notifyShow}>
-              <div>
-                <button
-                  type="button"
-                  className="notify"
-                  onClick={handleSetNotifyShow}
-                >
-                  <BsBell size={20} color="#c2185b" />
-                  {notificationData.length !== 0 && !notifyShow && (
-                    <span>{notificationData.length}</span>
-                  )}
-                </button>
-                <div className="div-notify">
-                  {notifyShow &&
-                    notificationData.map((notification) => (
-                      <Notifications key={notification.id}>
-                        <div>
-                          <strong>{notification.title}</strong>
-                          <h5>{notification.content}</h5>
-                        </div>
-                        <button
-                          type="button"
-                          onClick={() =>
-                            handleSetReadNotification(notification.id)
-                          }
-                        >
-                          <AiOutlineCloseCircle size={20} color="#5F4CEC" />
-                        </button>
-                      </Notifications>
-                    ))}
-                </div>
-              </div>
-              <a href="/profile">
-                <FiUser size={20} color="#c2185b" />
-              </a>
-              <button type="button" onClick={() => signOut()}>
-                <FiLogOut size={20} color="#c2185b" />
-              </button>
-            </Config>
-            <Toaster position="top-center" reverseOrder={false} />
-            <h1>AdminPage</h1>
-          </Products>
+          {optionSelected === 1 && <FoodOrders />}
+          {optionSelected === 2 && <h3>Sou a opção 2</h3>}
+          {optionSelected === 3 && <h3>Sou a opção 3</h3>}
         </Content>
       </Container>
       <Baseboard>
