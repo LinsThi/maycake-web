@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useEffect } from 'react';
-import { FiUser, FiLogOut } from 'react-icons/fi';
+import { FiUser } from 'react-icons/fi';
 import { AiOutlineCloseCircle } from 'react-icons/ai';
 import { IoMdCheckmarkCircle } from 'react-icons/io';
 import { MdCancel } from 'react-icons/md';
@@ -31,7 +31,6 @@ interface NotificationData {
 }
 
 const FoodOrders: React.FC = () => {
-  const { signOut } = useAuth();
   const [notificationData, setNotificationData] = useState<NotificationData[]>(
     [],
   );
