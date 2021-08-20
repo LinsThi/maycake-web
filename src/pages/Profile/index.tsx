@@ -1,4 +1,5 @@
 import React, { useCallback, useRef, ChangeEvent } from 'react';
+import { Link, useHistory } from 'react-router-dom';
 import { FiMail, FiKey, FiUser, FiCamera, FiLogOut } from 'react-icons/fi';
 import { BiLogInCircle } from 'react-icons/bi';
 import { RiHome2Line } from 'react-icons/ri';
@@ -6,7 +7,6 @@ import toast, { Toaster } from 'react-hot-toast';
 import { FormHandles } from '@unform/core';
 import { Form } from '@unform/web';
 import * as Yup from 'yup';
-import { useHistory } from 'react-router-dom';
 
 import api from '../../services/api';
 import getValidationErrors from '../../utils/getValidationsError';
@@ -127,9 +127,13 @@ const Profile: React.FC = () => {
           <HeaderContent>
             <img src={appName} alt="MayCake" />
             <Config>
-              <a href="/dashboard">
+              <Link
+                to={{
+                  pathname: user.admin ? '/admin' : '/dashboard',
+                }}
+              >
                 <RiHome2Line size={20} />
-              </a>
+              </Link>
 
               <button type="button" onClick={() => signOut()}>
                 <FiLogOut />

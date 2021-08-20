@@ -45,8 +45,6 @@ export const Config = styled.div<NotifyShow>`
   width: 120px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  margin-right: 30px;
 
   > div {
     margin-right: 18px;
@@ -66,10 +64,9 @@ export const Config = styled.div<NotifyShow>`
     }
   }
 
-  button {
-    & + button {
-      margin-left: 20px;
-    }
+  .profileUser {
+    cursor: pointer;
+    margin-left: 15px;
   }
 
   a {

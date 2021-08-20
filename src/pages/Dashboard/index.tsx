@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { FiUser, FiShoppingCart, FiLogOut } from 'react-icons/fi';
+import { FiUser, FiShoppingCart } from 'react-icons/fi';
 import { AiOutlineCloseCircle } from 'react-icons/ai';
 import { BsBell } from 'react-icons/bs';
 import { Toaster } from 'react-hot-toast';
@@ -16,7 +16,8 @@ import {
   Notifications,
   Baseboard,
 } from './styles';
-import { useAuth } from '../../hooks/auth';
+
+import { NewModal } from '../../components/Modal';
 
 import api from '../../services/api';
 
@@ -29,11 +30,11 @@ interface NotificationData {
 }
 
 const Dashboard: React.FC = () => {
-  const { signOut } = useAuth();
   const [notificationData, setNotificationData] = useState<NotificationData[]>(
     [],
   );
   const [notifyShow, setNotifyShow] = useState(false);
+  const [openModal, setOpenModal] = useState(false);
 
   const handleSetNotifyShow = useCallback(() => {
     setNotifyShow(!notifyShow);
@@ -69,6 +70,10 @@ const Dashboard: React.FC = () => {
       }
     });
   }, [notificationData]);
+
+  function handleSetModal() {
+    setOpenModal(!openModal);
+  }
 
   return (
     <>
@@ -108,18 +113,21 @@ const Dashboard: React.FC = () => {
                     ))}
                 </div>
               </div>
+
               <button type="button">
                 <FiShoppingCart size={20} color="#c2185b" />
               </button>
-              <a href="/profile">
-                <FiUser size={20} color="#c2185b" />
-              </a>
-              <button type="button" onClick={() => signOut()}>
-                <FiLogOut size={20} color="#c2185b" />
-              </button>
+
+              <FiUser
+                size={20}
+                color="#c2185b"
+                onClick={handleSetModal}
+                className="profileUser"
+              />
             </Config>
           </HeaderContent>
         </Header>
+        <NewModal isOpen={openModal} onRequestClose={handleSetModal} />
         <Products>
           <Toaster position="top-center" reverseOrder={false} />
           <h1>Sou um produto</h1>
