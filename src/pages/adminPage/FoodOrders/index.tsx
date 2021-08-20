@@ -8,6 +8,7 @@ import { Toaster } from 'react-hot-toast';
 
 import { useAuth } from '../../../hooks/auth';
 import api from '../../../services/api';
+import { NewModal } from '../../../components/Modal';
 
 import {
   Container,
@@ -35,6 +36,7 @@ const FoodOrders: React.FC = () => {
     [],
   );
   const [notifyShow, setNotifyShow] = useState(false);
+  const [openModal, setOpenModal] = useState(false);
   const [selectFirstOption, setSelectFirstOption] = useState(false);
 
   const handleSetNotifyShow = useCallback(() => {
@@ -57,6 +59,10 @@ const FoodOrders: React.FC = () => {
     },
     [notificationData],
   );
+
+  function handleSetModal() {
+    setOpenModal(!openModal);
+  }
 
   const handleSelectOption = useCallback(() => {
     setSelectFirstOption(!selectFirstOption);
@@ -131,13 +137,9 @@ const FoodOrders: React.FC = () => {
                 ))}
             </div>
           </div>
-          <a href="/profile">
-            <FiUser size={20} color="#c2185b" />
-          </a>
-          <button type="button" onClick={() => signOut()}>
-            <FiLogOut size={20} color="#c2185b" />
-          </button>
+          <FiUser size={20} color="#c2185b" onClick={handleSetModal} />
         </Config>
+        <NewModal isOpen={openModal} onRequestClose={handleSetModal} />
         <Toaster position="top-center" reverseOrder={false} />
         <Product>
           <img src={cakeImg} alt="chocolate" />

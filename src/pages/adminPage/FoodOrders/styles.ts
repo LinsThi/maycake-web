@@ -91,20 +91,20 @@ export const Option = styled.button<ButtonProps>`
 
 export const Config = styled.div<NotifyShow>`
   width: 100px;
-  margin-bottom: 10px;
+
   display: flex;
-  justify-content: space-between;
   margin-left: auto;
   margin-right: 20px;
-
-  button,
-  a {
-    margin-top: 35px;
-  }
+  margin-top: 35px;
 
   button {
     background: transparent;
     border: 0;
+  }
+
+  svg {
+    cursor: pointer;
+    margin-left: 20px;
   }
 
   > div {
