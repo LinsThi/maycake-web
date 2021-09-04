@@ -5,12 +5,15 @@ import GlobalStyle from './styles/global';
 import Routes from './routes';
 
 import { AuthProvider } from './hooks/auth';
+import { ProductProvider } from './hooks/product';
 
 const App: React.FC = () => (
   <>
     <Router>
       <AuthProvider>
-        <Routes />
+        <ProductProvider>
+          <Routes />
+        </ProductProvider>
       </AuthProvider>
 
       <GlobalStyle />

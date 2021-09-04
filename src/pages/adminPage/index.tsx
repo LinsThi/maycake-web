@@ -5,6 +5,7 @@ import { BiFoodMenu } from 'react-icons/bi';
 import { Container, Menu, Content, Baseboard } from './styles';
 
 import FoodOrders from './FoodOrders';
+import FoodList from './FoodList';
 import FoodRegister from './FoodRegister';
 import NavMenu from '../../components/NavMenu';
 
@@ -34,7 +35,7 @@ const adminPage: React.FC = () => {
         </Menu>
         <Content>
           {optionSelected === 1 && <FoodOrders />}
-          {optionSelected === 2 && <h3>Sou a opção 2</h3>}
+          {optionSelected === 2 && <FoodList />}
           {optionSelected === 3 && <FoodRegister />}
         </Content>
       </Container>
