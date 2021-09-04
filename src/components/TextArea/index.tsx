@@ -6,9 +6,14 @@ import { Container, Error } from './styles';
 
 interface TextAreaProps extends InputHTMLAttributes<HTMLTextAreaElement> {
   name: string;
+  fromModal?: boolean;
 }
 
-const TextArea: React.FC<TextAreaProps> = ({ name, ...rest }) => {
+const TextArea: React.FC<TextAreaProps> = ({
+  name,
+  fromModal = false,
+  ...rest
+}) => {
   const textRef = useRef(null);
   const { fieldName, defaultValue, error, registerField } = useField(name);
 
@@ -21,7 +26,7 @@ const TextArea: React.FC<TextAreaProps> = ({ name, ...rest }) => {
   }, [fieldName, registerField]);
 
   return (
-    <Container>
+    <Container isModal={fromModal} isErrored={!!error}>
       <textarea defaultValue={defaultValue} ref={textRef} {...rest} />
 
       {error && (

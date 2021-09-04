@@ -105,20 +105,23 @@ const FoodRegister: React.FC = () => {
           <Form onSubmit={handleSubmit} ref={formRef}>
             <Toaster position="top-center" reverseOrder={false} />
             <div className="productInfo">
-              <span>Nome do Produto</span>
+              <h2>Nome do Produto</h2>
               <InputProduct
                 name="nameProduct"
                 type="text"
                 placeholder="Nome do produto"
               />
-              <span>Descrição do produto</span>
+              <h2 className="descProduct">Descrição do produto</h2>
               <TextArea name="description" placeholder="Descrição do produto" />
-              <span>Preço</span>
-              <InputProduct name="value" type="text" placeholder="R$" />
+              <h2 className="valueProduct">Preço</h2>
+              <div className="coin">
+                <h3>R$</h3>
+                <InputProduct name="value" type="text" />
+              </div>
             </div>
 
             <div className="productImg">
-              <span>Adicionar imagens</span>
+              <h2>Adicionar imagens</h2>
               <label htmlFor="photo">
                 <BsCloudUpload size={90} />
                 <p>Clique aqui para upload</p>

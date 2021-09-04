@@ -1,28 +1,53 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 import ToolTip from '../ToolTip';
 
-export const Container = styled.div`
-  background: #fff;
-  font-size: 12px;
+interface TextAreaProps {
+  isModal: boolean;
+  isErrored: boolean;
+}
+
+export const Container = styled.div<TextAreaProps>`
+  display: flex;
+  align-items: center;
+  background: #e9e9e9;
+  border: 1px solid #e9e9e9;
+  border-radius: 5px;
+  margin-top: 5px;
 
   textarea {
+    background: transparent;
     resize: none;
-    width: 300px;
-    height: 150px;
-    background: #e9e9e9;
-    border: 10px;
-    border-radius: 5px;
-    margin-bottom: 30px;
+    width: 100%;
+    height: 160px;
+    border: 0;
     color: #000;
     font-weight: 500;
     padding: 10px;
+    margin-bottom: 10px;
+    ${(props) =>
+      props.isModal &&
+      css`
+        width: 320px;
+      `}
   }
+
+  ${(props) =>
+    props.isErrored &&
+    css`
+      border-color: #4676c2;
+    `}
+
+  ${(props) =>
+    props.isModal &&
+    css`
+      margin-top: 10px;
+    `}
 `;
 
 export const Error = styled(ToolTip)`
   height: 18px;
-  margin-left: 12px;
+  margin-right: 10px;
 
   svg {
     margin: 0;
