@@ -1,12 +1,5 @@
-import React, {
-  InputHTMLAttributes,
-  useState,
-  useEffect,
-  useRef,
-  useCallback,
-} from 'react';
+import React, { InputHTMLAttributes, useEffect, useRef } from 'react';
 import { IconBaseProps } from 'react-icons';
-import { FiAlertCircle } from 'react-icons/fi';
 import { useField } from '@unform/core';
 
 import { Container } from './styles';
@@ -19,7 +12,7 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
 
 const InputSearch: React.FC<InputProps> = ({ name, icon: Icon, ...rest }) => {
   const inputRef = useRef(null);
-  const { fieldName, defaultValue, error, registerField } = useField(name);
+  const { fieldName, defaultValue, registerField } = useField(name);
 
   useEffect(() => {
     registerField({

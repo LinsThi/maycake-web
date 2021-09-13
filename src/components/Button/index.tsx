@@ -5,13 +5,27 @@ import { Container } from './styles';
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   icon: React.ComponentType<IconBaseProps>;
+  loading?: boolean;
+  small?: boolean;
 }
 
-const Button: React.FC<ButtonProps> = ({ children, icon: Icon, ...rest }) => {
+const Button: React.FC<ButtonProps> = ({
+  children,
+  icon: Icon,
+  small = false,
+  loading,
+  ...rest
+}) => {
   return (
-    <Container type="button" {...rest}>
-      <Icon />
-      {children}
+    <Container type="button" {...rest} isSmall={small}>
+      {loading ? (
+        <div className="loading" />
+      ) : (
+        <>
+          <Icon />
+          {children}
+        </>
+      )}
     </Container>
   );
 };

@@ -1,6 +1,4 @@
-import styled, { css } from 'styled-components';
-
-import ToolTip from '../ToolTip';
+import styled from 'styled-components';
 
 export const Container = styled.div`
   display: flex;

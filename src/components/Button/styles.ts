@@ -1,7 +1,11 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { shade } from 'polished';
 
-export const Container = styled.button`
+interface ButtonProps {
+  isSmall?: boolean;
+}
+
+export const Container = styled.button<ButtonProps>`
   margin-top: 24px;
   margin-bottom: 24px;
   padding: 6px;
@@ -9,6 +13,7 @@ export const Container = styled.button`
 
   display: flex;
   align-items: center;
+  justify-content: center;
 
   font-size: 20px;
 
@@ -23,10 +28,30 @@ export const Container = styled.button`
     background: ${shade(0.2, '#FFE1E3')};
   }
 
-  svg {
-    margin-left: 115px;
-    margin-right: 12px;
+  .loading {
+    animation: is-rotating 1s infinite;
+    border: 6px solid #e5e5e5;
+    border-radius: 50%;
+    border-top-color: #c2185b;
+    height: 25px;
+    width: 25px;
   }
+
+  @keyframes is-rotating {
+    to {
+      transform: rotate(1turn);
+    }
+  }
+
+  ${(props) =>
+    props.isSmall &&
+    css`
+      width: 60%;
+      margin-left: 30px;
+      svg {
+        margin-right: 10px;
+      }
+    `}
 
   @media (max-width: 400px) {
     width: 98%;

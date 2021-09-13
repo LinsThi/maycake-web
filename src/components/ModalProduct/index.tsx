@@ -1,4 +1,4 @@
-import { useCallback, useRef } from 'react';
+import { ChangeEvent, useCallback, useRef } from 'react';
 import Modal from 'react-modal';
 import { FiCamera } from 'react-icons/fi';
 import { IoMdCloseCircle } from 'react-icons/io';
@@ -28,7 +28,7 @@ interface ModalProductProps {
 
 export function ModalProduct({ isOpen, onRequestClose }: ModalProductProps) {
   const formRef = useRef<FormHandles>(null);
-  const { productInfo } = useProduct();
+  const { productInfo, searchProduct } = useProduct();
 
   const handleSubmit = useCallback(
     async (data: FormData) => {
@@ -69,6 +69,22 @@ export function ModalProduct({ isOpen, onRequestClose }: ModalProductProps) {
     [productInfo.id],
   );
 
+  const handleUpdatePhotoProduct = useCallback(
+    (e: ChangeEvent<HTMLInputElement>) => {
+      if (e.target.files) {
+        const data = new FormData();
+
+        data.append('photo', e.target.files[0]);
+
+        api.patch('/products/photo', data).then(() => {
+          toast.success('Foto do produto atualizado com sucesso');
+          searchProduct({ id: productInfo.id });
+        });
+      }
+    },
+    [searchProduct, productInfo.id],
+  );
+
   return (
     <Modal
       isOpen={isOpen}
@@ -96,7 +112,11 @@ export function ModalProduct({ isOpen, onRequestClose }: ModalProductProps) {
           <div className="infoProduct">
             <img src={productInfo.product_url} alt={productInfo.name} />
             <label htmlFor="imgProduct">
-              <input type="file" id="imgProduct" />
+              <input
+                type="file"
+                id="imgProduct"
+                onChange={handleUpdatePhotoProduct}
+              />
               <FiCamera />
             </label>
           </div>
