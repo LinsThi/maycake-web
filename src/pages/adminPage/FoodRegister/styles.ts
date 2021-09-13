@@ -130,7 +130,8 @@ export const Product = styled.div`
         margin-left: auto;
         margin-bottom: 17px;
         border: 0;
-        background: #fa9898;
+        border: 1px solid #c4c4c4;
+        background: #e9e9e9;
         color: #c2185b;
         width: 100px;
         height: 40px;
