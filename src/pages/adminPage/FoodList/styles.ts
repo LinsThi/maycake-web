@@ -1,5 +1,9 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { shade } from 'polished';
+
+interface ProductProps {
+  isVisible: boolean;
+}
 
 export const Container = styled.div``;
 
@@ -77,7 +81,7 @@ export const ProductsInfo = styled.div`
   }
 `;
 
-export const Product = styled.div`
+export const Product = styled.div<ProductProps>`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -133,4 +137,30 @@ export const Product = styled.div`
   & + div {
     margin-left: 40px;
   }
+
+  ${(props) =>
+    !props.isVisible &&
+    css`
+      border: 1px solid #a5a5a5;
+      background: #e9e9e9;
+
+      img {
+        filter: grayscale(1);
+      }
+      .productEdit {
+        svg {
+          filter: grayscale(1);
+        }
+      }
+
+      &::before {
+        position: absolute;
+        height: 68px;
+        width: 1px;
+        left: 70%;
+        top: 17.5px;
+        content: ' ';
+        background: #a5a5a5;
+      }
+    `}
 `;

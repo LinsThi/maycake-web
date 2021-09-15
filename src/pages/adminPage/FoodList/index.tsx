@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { FiUser, FiSearch } from 'react-icons/fi';
 import { MdEdit } from 'react-icons/md';
 import { BsEye, BsEyeSlash } from 'react-icons/bs';
+import toast, { Toaster } from 'react-hot-toast';
 
 import { Form } from '@unform/web';
 import { FormHandles } from '@unform/core';
@@ -29,6 +30,7 @@ interface ProductProps {
   name: string;
   value: string;
   product_url: string;
+  visible: boolean;
 }
 
 interface FilterProduct {
@@ -79,6 +81,21 @@ const FoodList: React.FC = () => {
     setCurrentPage(page);
   }, []);
 
+  const handleHidenProduct = useCallback(async (product: ProductProps) => {
+    await api.put('/products/visibleAlter', {
+      product_id: product.id,
+      visible: !product.visible,
+    });
+
+    toast(`${!product.visible ? 'Produto visivel' : 'Produto oculto'}`, {
+      icon: `${!product.visible ? '👀' : '👻'}`,
+    });
+
+    api.get('/products/list').then((response) => {
+      setProducts(response.data);
+    });
+  }, []);
+
   useEffect(() => {
     api.get('/products/list').then((response) => {
       setProducts(response.data);
@@ -93,10 +110,11 @@ const FoodList: React.FC = () => {
             <img src={appName} alt="MayCake" />
           </HeaderContent>
           <Config>
-            <FiUser size={20} color="#c2185b" onClick={handleSetModal} />
+            <FiUser size={22} color="#c2185b" onClick={handleSetModal} />
           </Config>
         </Header>
       </Container>
+      <Toaster position="top-center" />
       <NewModal isOpen={openModal} onRequestClose={handleSetModal} />
       <ModalProduct
         isOpen={openModalProduct}
@@ -131,11 +149,24 @@ const FoodList: React.FC = () => {
         <ProductsInfo>
           <div className="lineOne">
             {currentProducts.slice(0, 3).map((product) => (
-              <Product key={product.id}>
+              <Product key={product.id} isVisible={product.visible}>
                 <div className="productInfo">
                   <h3>{product.name}</h3>
                   <h3>{product.value}</h3>
-                  <BsEye size={20} color="#cb3c68" />
+
+                  {product.visible ? (
+                    <BsEyeSlash
+                      size={20}
+                      color="#cb3c68"
+                      onClick={() => handleHidenProduct(product)}
+                    />
+                  ) : (
+                    <BsEye
+                      size={20}
+                      color="#cb3c68"
+                      onClick={() => handleHidenProduct(product)}
+                    />
+                  )}
                 </div>
                 <div className="productEdit">
                   <MdEdit
@@ -153,11 +184,23 @@ const FoodList: React.FC = () => {
 
           <div className="lineTwo">
             {currentProducts.slice(3, 6).map((product) => (
-              <Product key={product.id}>
+              <Product key={product.id} isVisible={product.visible}>
                 <div className="productInfo">
                   <h3>{product.name}</h3>
                   <h3>{product.value}</h3>
-                  <BsEye size={20} color="#cb3c68" />
+                  {product.visible ? (
+                    <BsEyeSlash
+                      size={20}
+                      color="#cb3c68"
+                      onClick={() => handleHidenProduct(product)}
+                    />
+                  ) : (
+                    <BsEye
+                      size={20}
+                      color="#cb3c68"
+                      onClick={() => handleHidenProduct(product)}
+                    />
+                  )}
                 </div>
                 <div className="productEdit">
                   <MdEdit
@@ -175,11 +218,23 @@ const FoodList: React.FC = () => {
 
           <div className="lineTree">
             {currentProducts.slice(6, 9).map((product) => (
-              <Product key={product.id}>
+              <Product key={product.id} isVisible={product.visible}>
                 <div className="productInfo">
                   <h3>{product.name}</h3>
                   <h3>{product.value}</h3>
-                  <BsEye size={20} color="#cb3c68" />
+                  {product.visible ? (
+                    <BsEyeSlash
+                      size={20}
+                      color="#cb3c68"
+                      onClick={() => handleHidenProduct(product)}
+                    />
+                  ) : (
+                    <BsEye
+                      size={20}
+                      color="#cb3c68"
+                      onClick={() => handleHidenProduct(product)}
+                    />
+                  )}
                 </div>
                 <div className="productEdit">
                   <MdEdit
