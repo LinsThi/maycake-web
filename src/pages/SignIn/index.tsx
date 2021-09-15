@@ -1,4 +1,4 @@
-import React, { useCallback, useRef } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 import { FiMail, FiKey } from 'react-icons/fi';
 import { BiLogInCircle } from 'react-icons/bi';
 import toast, { Toaster } from 'react-hot-toast';
@@ -23,12 +23,15 @@ interface FormData {
 
 const SignIn: React.FC = () => {
   const formRef = useRef<FormHandles>(null);
+  const [loading, setLoading] = useState(false);
 
   const { signIn } = useAuth();
 
   const handleSubmit = useCallback(
     async (data: FormData) => {
       try {
+        setLoading(true);
+
         formRef.current?.setErrors({});
         const schema = Yup.object().shape({
           email: Yup.string()
@@ -49,8 +52,10 @@ const SignIn: React.FC = () => {
 
           formRef.current?.setErrors(errors);
         } else {
-          toast.error('E-mail/Password incorreto');
+          toast.error('E-mail/Senha incorreto');
         }
+      } finally {
+        setLoading(false);
       }
     },
     [signIn],
@@ -78,7 +83,7 @@ const SignIn: React.FC = () => {
               changeIcon
               placeholder="Senha"
             />
-            <Button type="submit" icon={BiLogInCircle}>
+            <Button type="submit" icon={BiLogInCircle} loading={loading}>
               Entrar
             </Button>
             <div id="down">
