@@ -2,10 +2,6 @@ import styled, { css } from 'styled-components';
 
 import backgroundNav from '../../../assets/backgroundNav.png';
 
-interface NotifyShow {
-  notifyShow: boolean;
-}
-
 interface ButtonProps {
   isSelected: boolean;
 }
@@ -27,13 +23,28 @@ export const Container = styled.div`
       margin-left: 60px;
     }
 
-    div {
+    .options {
       display: flex;
       align-items: center;
       justify-content: center;
       button {
         & + button {
           margin-left: 20px;
+        }
+      }
+    }
+
+    .infoOrders {
+      display: flex;
+      flex-direction: column;
+      button {
+        border: 0;
+        background: transparent;
+
+        span {
+          margin-left: 15px;
+          color: #9d9d9d;
+          cursor: pointer;
         }
       }
     }
@@ -89,85 +100,28 @@ export const Option = styled.button<ButtonProps>`
   }
 `;
 
-export const Config = styled.div<NotifyShow>`
+export const Config = styled.div`
   width: 100px;
 
   display: flex;
+  align-items: center;
+  justify-content: center;
   margin-left: auto;
-  margin-right: 20px;
-  margin-top: 35px;
+  margin-right: 10px;
+  margin-top: 15px;
 
   button {
     background: transparent;
     border: 0;
   }
 
+  > div {
+    top: 3px;
+  }
+
   svg {
     cursor: pointer;
     margin-left: 20px;
-  }
-
-  > div {
-    position: relative;
-    align-self: center;
-
-    span {
-      position: absolute;
-      background: #ab0c2c;
-      border-radius: 50%;
-      width: 14px;
-      height: 14px;
-      left: 10px;
-      font-size: 12px;
-      bottom: 0;
-      color: #fff;
-    }
-  }
-
-  .div-notify {
-    position: absolute;
-    right: 0;
-    margin-top: 7px;
-
-    ${(props) =>
-      props.notifyShow &&
-      css`
-        &::after {
-          content: '';
-          border-style: solid;
-          border-color: #c2185b transparent;
-          border-width: 10px 10px 0 10px;
-          bottom: 100%;
-          position: absolute;
-          right: 0;
-        }
-      `}
-  }
-`;
-
-export const Notifications = styled.div`
-  background: #fa9898;
-  width: 280px;
-  height: 60px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  transition: 0.2s;
-
-  div {
-    margin-right: auto;
-    margin-left: 5px;
-  }
-
-  svg {
-    cursor: pointer;
-    right: auto;
-    margin-right: 10px;
-  }
-
-  &:hover {
-    transform: translateX(10px);
   }
 `;
 
