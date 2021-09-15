@@ -94,7 +94,7 @@ const FoodRegister: React.FC = () => {
             <img src={appName} alt="MayCake" />
           </HeaderContent>
           <Config>
-            <FiUser size={20} color="#c2185b" onClick={handleSetModal} />
+            <FiUser size={22} color="#c2185b" onClick={handleSetModal} />
           </Config>
         </Header>
       </Container>
