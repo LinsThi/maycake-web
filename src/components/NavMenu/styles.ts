@@ -15,7 +15,7 @@ export const Div = styled.div<ButtonProps>`
     props.isFocused &&
     css`
       border-radius: 20%;
-      background: #ffcccc;
+      background: #fce9e9;
     `};
 
   & + Div {
