@@ -7,13 +7,12 @@ export const Container = styled.div`
   border: 1px solid #a5a5a5;
   background: #fff;
 
-  width: 550px;
+  width: 500px;
   height: 42px;
   border: 1px solid #cb3c68;
   border-radius: 7px;
   padding: 10px;
 
-  margin-top: 10px;
   margin-bottom: 25px;
 
   svg {
