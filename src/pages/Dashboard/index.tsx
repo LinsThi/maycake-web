@@ -1,9 +1,9 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import { FiUser, FiShoppingCart } from 'react-icons/fi';
-import { AiOutlineCloseCircle } from 'react-icons/ai';
-import { BsBell } from 'react-icons/bs';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
+import { FiUser, FiShoppingCart, FiSearch } from 'react-icons/fi';
 import { Toaster } from 'react-hot-toast';
 
+import { Form } from '@unform/web';
+import { FormHandles } from '@unform/core';
 import appName from '../../assets/appName.png';
 
 import {
@@ -11,69 +11,73 @@ import {
   Header,
   HeaderContent,
   Config,
-  Products,
+  Content,
+  ListProduct,
   Nav,
-  Notifications,
-  Baseboard,
 } from './styles';
 
 import { NewModal } from '../../components/Modal';
+import Baseboard from '../../components/Baseboard';
 
 import api from '../../services/api';
+import Notify from '../../components/Notify';
+import InputSearch from '../../components/InputSearch';
+import ProductInfo from '../../components/ProductInfo';
 
-interface NotificationData {
+interface ProductProps {
   id: string;
-  title: string;
-  content: string;
-  recipient_id: string;
-  read: boolean;
+  name: string;
+  description: string;
+  value: string;
+  product_url: string;
+  visible: boolean;
+}
+
+interface FilterProduct {
+  name: string;
 }
 
 const Dashboard: React.FC = () => {
-  const [notificationData, setNotificationData] = useState<NotificationData[]>(
-    [],
-  );
-  const [notifyShow, setNotifyShow] = useState(false);
+  const formRef = useRef<FormHandles>(null);
   const [openModal, setOpenModal] = useState(false);
-
-  const handleSetNotifyShow = useCallback(() => {
-    setNotifyShow(!notifyShow);
-  }, [notifyShow]);
-
-  const handleSetReadNotification = useCallback(
-    (id) => {
-      api
-        .patch('/notifications/update', {
-          id,
-        })
-        .then((response) => {
-          setNotificationData(
-            notificationData.filter(
-              (notification) => notification.id !== response.data.read,
-            ),
-          );
-        });
-    },
-    [notificationData],
-  );
-
-  useEffect(() => {
-    api.get('/notifications/show').then((response) => {
-      const notifications: NotificationData[] = response.data;
-
-      setNotificationData(
-        notifications.filter((notification) => !notification.read),
-      );
-
-      if (notificationData.length === 0) {
-        setNotifyShow(false);
-      }
-    });
-  }, [notificationData]);
+  const [products, setProducts] = useState<ProductProps[]>([]);
+  const [filterProduct, setFilterProduct] = useState('');
 
   function handleSetModal() {
     setOpenModal(!openModal);
   }
+
+  const updateArrayProducts = useCallback(() => {
+    api.get('/products/list').then((response) => {
+      let productsArray: ProductProps[];
+      productsArray = response.data;
+      setProducts(
+        productsArray
+          .sort((product1, product2) => {
+            let productOne = product1.name.toLowerCase();
+            let productTwo = product2.name.toLowerCase();
+            return productOne === productTwo
+              ? 0
+              : productOne > productTwo
+              ? 1
+              : -1;
+          })
+          .filter((product) => product.name.includes(filterProduct)),
+      );
+    });
+  }, [filterProduct]);
+
+  const handleSearchSubmit = useCallback(
+    (data: FilterProduct) => {
+      setFilterProduct(data.name);
+      updateArrayProducts();
+    },
+    [updateArrayProducts],
+  );
+
+  useEffect(() => {
+    updateArrayProducts();
+  }, [updateArrayProducts]);
 
   return (
     <>
@@ -81,57 +85,51 @@ const Dashboard: React.FC = () => {
         <Header>
           <HeaderContent>
             <img src={appName} alt="MayCake" />
-            <Config notifyShow={notifyShow}>
-              <div>
-                <button
-                  type="button"
-                  className="notify"
-                  onClick={handleSetNotifyShow}
-                >
-                  <BsBell size={20} color="#c2185b" />
-                  {notificationData.length !== 0 && !notifyShow && (
-                    <span>{notificationData.length}</span>
-                  )}
-                </button>
-                <div className="div-notify">
-                  {notifyShow &&
-                    notificationData.map((notification) => (
-                      <Notifications key={notification.id}>
-                        <div>
-                          <strong>{notification.title}</strong>
-                          <h5>{notification.content}</h5>
-                        </div>
-                        <button
-                          type="button"
-                          onClick={() =>
-                            handleSetReadNotification(notification.id)
-                          }
-                        >
-                          <AiOutlineCloseCircle size={20} color="#5F4CEC" />
-                        </button>
-                      </Notifications>
-                    ))}
-                </div>
-              </div>
+            <Config>
+              <Notify />
 
-              <button type="button">
-                <FiShoppingCart size={20} color="#c2185b" />
-              </button>
+              <FiShoppingCart size={22} color="#c2185b" />
 
-              <FiUser
-                size={20}
-                color="#c2185b"
-                onClick={handleSetModal}
-                className="profileUser"
-              />
+              <FiUser size={22} color="#c2185b" onClick={handleSetModal} />
             </Config>
           </HeaderContent>
         </Header>
         <NewModal isOpen={openModal} onRequestClose={handleSetModal} />
-        <Products>
-          <Toaster position="top-center" reverseOrder={false} />
-          <h1>Sou um produto</h1>
-        </Products>
+        <Toaster position="top-center" reverseOrder={false} />
+        <Content>
+          <ListProduct>
+            <div className="info">
+              <div>
+                <h2>Todos os produtos</h2>
+                <p>
+                  {products.filter((product) => product.visible).length}{' '}
+                  produtos
+                </p>
+              </div>
+              <Form ref={formRef} onSubmit={handleSearchSubmit}>
+                <InputSearch
+                  name="name"
+                  type="text"
+                  icon={FiSearch}
+                  placeholder="O que você está buscando?"
+                />
+              </Form>
+            </div>
+            <div className="products">
+              {products.map(
+                (product) =>
+                  product.visible && (
+                    <ProductInfo
+                      key={product.id}
+                      img={product.product_url}
+                      name={product.name}
+                      value={product.value}
+                    />
+                  ),
+              )}
+            </div>
+          </ListProduct>
+        </Content>
         <Nav>
           <img src={appName} alt="MayCake" />
           <ul>
@@ -147,15 +145,7 @@ const Dashboard: React.FC = () => {
           </ul>
         </Nav>
       </Container>
-      <Baseboard>
-        <strong>&copy; May Cake - Todos os direitos reservados</strong>
-        <p>
-          &lt;/&gt; Desenvolvido por{' '}
-          <a href="https://github.com/LinsThi" target="blank">
-            Lins
-          </a>
-        </p>
-      </Baseboard>
+      <Baseboard />
     </>
   );
 };

@@ -2,12 +2,13 @@ import React, { useState, useCallback } from 'react';
 import { FiBookOpen, FiFilePlus } from 'react-icons/fi';
 import { BiFoodMenu } from 'react-icons/bi';
 
-import { Container, Menu, Content, Baseboard } from './styles';
+import { Container, Menu, Content } from './styles';
 
 import FoodOrders from './FoodOrders';
 import FoodList from './FoodList';
 import FoodRegister from './FoodRegister';
 import NavMenu from '../../components/NavMenu';
+import Baseboard from '../../components/Baseboard';
 
 const adminPage: React.FC = () => {
   const [optionSelected, setOptionSelected] = useState(0);
@@ -39,15 +40,8 @@ const adminPage: React.FC = () => {
           {optionSelected === 3 && <FoodRegister />}
         </Content>
       </Container>
-      <Baseboard>
-        <strong>&copy; May Cake - Todos os direitos reservados</strong>
-        <p>
-          &lt;/&gt; Desenvolvido por{' '}
-          <a href="https://github.com/LinsThi" target="blank">
-            Lins
-          </a>
-        </p>
-      </Baseboard>
+
+      <Baseboard />
     </>
   );
 };

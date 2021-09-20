@@ -13,7 +13,7 @@ export const Container = styled.div`
 
   .option {
     background: url(${backgroundNav}) center;
-    border-right: 2px solid #fa9898;
+    border-right: 2px solid #bf7d8c;
     width: 240px;
 
     > img {

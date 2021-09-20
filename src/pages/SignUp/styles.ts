@@ -70,29 +70,6 @@ export const Content = styled.div`
   }
 `;
 
-export const Baseboard = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-
-  width: 100%;
-  height: 60px;
-  background: #fa9898;
-  color: #fff;
-
-  cursor: default;
-
-  a {
-    text-decoration: none;
-    color: #fff;
-  }
-
-  @media (max-height: 510px) {
-    display: none;
-  }
-`;
-
 export const Background = styled.div`
   flex: 1;
   background: url(${backgroundSignIn}) no-repeat center;

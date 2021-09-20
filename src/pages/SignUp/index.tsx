@@ -11,11 +11,12 @@ import { Link, useHistory } from 'react-router-dom';
 import api from '../../services/api';
 import getValidationErrors from '../../utils/getValidationsError';
 
-import { Container, Content, Background, Baseboard } from './styles';
+import { Container, Content, Background } from './styles';
 import nameForm from '../../assets/nameForm.png';
 
 import Input from '../../components/Input';
 import Button from '../../components/Button';
+import Baseboard from '../../components/Baseboard';
 
 interface FormData {
   name: string;
@@ -113,15 +114,8 @@ const SignIn: React.FC = () => {
           </Form>
         </Content>
       </Container>
-      <Baseboard>
-        <strong>&copy; May Cake - Todos os direitos reservados</strong>
-        <p>
-          &lt;/&gt; Desenvolvido por{' '}
-          <a href="https://github.com/LinsThi" target="blank">
-            Lins
-          </a>
-        </p>
-      </Baseboard>
+
+      <Baseboard />
     </>
   );
 };

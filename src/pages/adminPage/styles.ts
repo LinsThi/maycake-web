@@ -22,7 +22,7 @@ export const Menu = styled.div`
     max-width: 100px;
     width: 100px;
 
-    background-color: #fa9898;
+    background-color: #bf7d8c;
     display: flex;
     align-items: center;
     flex-direction: column;

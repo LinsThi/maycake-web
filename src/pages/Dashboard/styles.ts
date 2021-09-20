@@ -1,10 +1,6 @@
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 
 import backgroundNav from '../../assets/backgroundNav.png';
-
-interface NotifyShow {
-  notifyShow: boolean;
-}
 
 export const Container = styled.div`
   width: 100%;
@@ -12,124 +8,97 @@ export const Container = styled.div`
 `;
 
 export const Header = styled.header`
-  padding: 1vw;
+  height: 70px;
+  padding: 10px;
   background: #fff;
+
   &::after {
     display: flex;
     content: '';
-    width: 6vw;
+    width: 80px;
     height: 1px;
     background: #fa0a7d;
-    margin: 0 4vw;
+    margin: 0 45px;
   }
 `;
 
 export const HeaderContent = styled.div`
   width: 100%;
-  margin-top: 3vw;
+  margin-top: 15px;
   display: flex;
   justify-content: space-between;
 
   > img {
-    margin-left: 4vw;
+    margin-left: 45px;
     height: 25.5px;
   }
-
-  button {
-    background: transparent;
-    border: 0;
-  }
 `;
 
-export const Config = styled.div<NotifyShow>`
-  width: 120px;
+export const Config = styled.div`
   display: flex;
   align-items: center;
-
-  > div {
-    margin-right: 18px;
-    position: relative;
-    align-self: center;
-
-    span {
-      position: absolute;
-      background: #ab0c2c;
-      border-radius: 50%;
-      width: 14px;
-      height: 14px;
-      left: 10px;
-      font-size: 12px;
-      bottom: 0;
-      color: #fff;
-    }
-  }
-
-  .profileUser {
-    cursor: pointer;
-    margin-left: 15px;
-  }
-
-  a {
-    text-decoration: none;
-    color: #c2185b;
-    margin-left: 20px;
-    margin-right: 20px;
-  }
-
-  .div-notify {
-    position: absolute;
-    right: 1px;
-    margin-top: 7px;
-
-    ${(props) =>
-      props.notifyShow &&
-      css`
-        &::after {
-          content: '';
-          border-style: solid;
-          border-color: #c2185b transparent;
-          border-width: 10px 10px 0 10px;
-          bottom: 100%;
-          position: absolute;
-          right: 0;
-        }
-      `}
-  }
-`;
-
-export const Notifications = styled.div`
-  background: #fa9898;
-  width: 280px;
-  height: 60px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  transition: 0.2s;
-
-  div {
-    margin-right: auto;
-    margin-left: 5px;
-  }
 
   svg {
     cursor: pointer;
-    right: auto;
-    margin-right: 10px;
-  }
-
-  &:hover {
-    transform: translateX(10px);
+    margin-left: 10px;
   }
 `;
 
-export const Products = styled.div`
+export const Content = styled.div`
+  display: flex;
+  flex-direction: column;
   background: #fff;
-  max-height: 60vh;
-  height: 60vh;
+  height: 500px; // TODO: Arrumar o calc para altura
+`;
+
+export const ListProduct = styled.div`
+  margin-left: 55px;
+  margin-right: 110px;
+
+  .info {
+    display: flex;
+    position: relative;
+    align-items: center;
+
+    h2 {
+      color: #cb3c68;
+    }
+
+    p {
+      color: #cfcfcf;
+    }
+
+    form {
+      display: flex;
+      position: absolute;
+      right: 0;
+      top: 0;
+    }
+  }
+  .products {
+    display: flex;
+    flex-wrap: wrap;
+    height: calc(100% - 260px);
+    overflow-y: auto;
+
+    margin-top: 45px;
+
+    div + div {
+      margin-left: 45px;
+    }
+
+    div:nth-child(6n) {
+      margin-left: 0;
+    }
+
+    ::-webkit-scrollbar {
+      width: 0px;
+    }
+  }
 `;
 
 export const Nav = styled.div`
+  height: 160px;
   display: flex;
   align-items: center;
   flex-direction: column;
@@ -138,8 +107,8 @@ export const Nav = styled.div`
 
   img {
     height: 33px;
-    margin-top: 8vh;
-    margin-bottom: 4vh;
+    margin-top: 50px;
+    margin-bottom: 25px;
   }
 
   ul {

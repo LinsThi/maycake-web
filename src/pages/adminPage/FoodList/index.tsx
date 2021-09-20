@@ -54,7 +54,11 @@ const FoodList: React.FC = () => {
 
   const currentProducts = products
     .slice(startIndex, endIndex)
-    .sort()
+    .sort((product1, product2) => {
+      let productOne = product1.name.toLowerCase();
+      let productTwo = product2.name.toLowerCase();
+      return productOne === productTwo ? 0 : productOne > productTwo ? 1 : -1;
+    })
     .filter((product) => product.name.includes(filterProduct));
 
   const handleSetModal = useCallback(() => {
