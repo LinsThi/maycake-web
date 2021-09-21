@@ -7,52 +7,46 @@ export const Container = styled.div`
 `;
 
 export const Header = styled.header`
-  padding: 1vw;
+  height: 70px;
+  padding: 10px;
   background: #fff;
+
   &::after {
     display: flex;
     content: '';
-    width: 6vw;
+    width: 80px;
     height: 1px;
     background: #fa0a7d;
-    margin: 0 4vw;
+    margin: 0 45px;
   }
 `;
 
 export const HeaderContent = styled.div`
   width: 100%;
-  margin-top: 3vw;
+  margin-top: 15px;
   display: flex;
   justify-content: space-between;
 
   > img {
-    margin-left: 4vw;
+    margin-left: 45px;
     height: 25.5px;
   }
 
   button {
     background: transparent;
     border: 0;
-
-    svg {
-      color: #c2185b;
-      width: 20px;
-      height: 20px;
-    }
   }
 `;
 
 export const Config = styled.div`
-  width: 70px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  margin-right: 30px;
+  margin-right: 20px;
 
   a {
     text-decoration: none;
     color: #c2185b;
-    margin-right: 25px;
+    margin-right: 15px;
   }
 `;
 
@@ -142,28 +136,5 @@ export const AvatarInput = styled.div`
     &:hover {
       background: ${shade(0.2, '#fa9898')};
     }
-  }
-`;
-
-export const Baseboard = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-
-  width: 100%;
-  height: 60px;
-  background: #fa9898;
-  color: #fff;
-
-  cursor: default;
-
-  a {
-    text-decoration: none;
-    color: #fff;
-  }
-
-  @media (max-height: 510px) {
-    display: none;
   }
 `;

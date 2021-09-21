@@ -16,7 +16,6 @@ import appName from '../../assets/appName.png';
 import {
   Container,
   Content,
-  Baseboard,
   Header,
   HeaderContent,
   Config,
@@ -26,6 +25,7 @@ import {
 import Input from '../../components/Input';
 import Button from '../../components/Button';
 import { useAuth } from '../../hooks/auth';
+import Baseboard from '../../components/Baseboard';
 
 interface FormData {
   name: string;
@@ -132,11 +132,11 @@ const Profile: React.FC = () => {
                   pathname: user.admin ? '/admin' : '/dashboard',
                 }}
               >
-                <RiHome2Line size={20} />
+                <RiHome2Line size={22} />
               </Link>
 
               <button type="button" onClick={() => signOut()}>
-                <FiLogOut />
+                <FiLogOut size={22} color="#c2185b" />
               </button>
             </Config>
           </HeaderContent>
@@ -190,15 +190,8 @@ const Profile: React.FC = () => {
           </Form>
         </Content>
       </Container>
-      <Baseboard>
-        <strong>&copy; May Cake - Todos os direitos reservados</strong>
-        <p>
-          &lt;/&gt; Desenvolvido por{' '}
-          <a href="https://github.com/LinsThi" target="blank">
-            Lins
-          </a>
-        </p>
-      </Baseboard>
+
+      <Baseboard />
     </>
   );
 };
