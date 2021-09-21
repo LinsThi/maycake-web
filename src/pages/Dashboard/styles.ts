@@ -1,7 +1,5 @@
 import styled from 'styled-components';
 
-import backgroundNav from '../../assets/backgroundNav.png';
-
 export const Container = styled.div`
   width: 100%;
   height: 100%;
@@ -37,6 +35,7 @@ export const HeaderContent = styled.div`
 export const Config = styled.div`
   display: flex;
   align-items: center;
+  margin-right: 15px;
 
   svg {
     cursor: pointer;
@@ -83,49 +82,16 @@ export const ListProduct = styled.div`
 
     margin-top: 45px;
 
-    div + div {
+    button + button {
       margin-left: 45px;
     }
 
-    div:nth-child(6n) {
+    button:nth-child(6n) {
       margin-left: 0;
     }
 
     ::-webkit-scrollbar {
       width: 0px;
-    }
-  }
-`;
-
-export const Nav = styled.div`
-  height: 160px;
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  background: url(${backgroundNav}) center;
-  border-top: 2px solid #fa9898;
-
-  img {
-    height: 33px;
-    margin-top: 50px;
-    margin-bottom: 25px;
-  }
-
-  ul {
-    display: flex;
-
-    li {
-      list-style: none;
-      margin-bottom: 62px;
-
-      & + li {
-        margin-left: 15px;
-      }
-
-      a {
-        text-decoration: none;
-        color: #cb3c68;
-      }
     }
   }
 `;

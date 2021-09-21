@@ -13,7 +13,6 @@ import {
   Config,
   Content,
   ListProduct,
-  Nav,
 } from './styles';
 
 import { NewModal } from '../../components/Modal';
@@ -23,6 +22,7 @@ import api from '../../services/api';
 import Notify from '../../components/Notify';
 import InputSearch from '../../components/InputSearch';
 import ProductInfo from '../../components/ProductInfo';
+import NavBar from '../../components/NavBar';
 
 interface ProductProps {
   id: string;
@@ -121,6 +121,7 @@ const Dashboard: React.FC = () => {
                   product.visible && (
                     <ProductInfo
                       key={product.id}
+                      id={product.id}
                       img={product.product_url}
                       name={product.name}
                       value={product.value}
@@ -130,20 +131,8 @@ const Dashboard: React.FC = () => {
             </div>
           </ListProduct>
         </Content>
-        <Nav>
-          <img src={appName} alt="MayCake" />
-          <ul>
-            <li>
-              <a href="https://www.instagram.com/mayah.png/">Contato</a>
-            </li>
-            <li>
-              <a href="/carrinho">Carrinho</a>
-            </li>
-            <li>
-              <a href="/profile">Perfil</a>
-            </li>
-          </ul>
-        </Nav>
+
+        <NavBar />
       </Container>
       <Baseboard />
     </>
