@@ -47,6 +47,11 @@ export const Content = styled.div`
       color: #c2185b;
     }
 
+    > button {
+      margin-top: 24px;
+      margin-bottom: 24px;
+    }
+
     #down {
       display: flex;
       align-items: center;
