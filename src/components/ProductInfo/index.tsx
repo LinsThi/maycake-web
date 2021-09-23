@@ -21,7 +21,7 @@ const ProductInfo: React.FC<ProductInfoProps> = ({ img, name, value, id }) => {
 
   return (
     <Container type="button" onClick={handleSelectProduct}>
-      <Link to="/product">
+      <Link to={`/product/${id}`}>
         <Content>
           <img src={img} alt="bolo de choco" />
           <h3>{name}</h3>
