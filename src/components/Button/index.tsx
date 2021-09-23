@@ -7,6 +7,7 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   icon: React.ComponentType<IconBaseProps>;
   loading?: boolean;
   small?: boolean;
+  backgroundStyle?: boolean;
 }
 
 const Button: React.FC<ButtonProps> = ({
@@ -14,10 +15,16 @@ const Button: React.FC<ButtonProps> = ({
   icon: Icon,
   small = false,
   loading,
+  backgroundStyle = false,
   ...rest
 }) => {
   return (
-    <Container type="button" {...rest} isSmall={small}>
+    <Container
+      type="button"
+      {...rest}
+      isSmall={small}
+      isReverse={backgroundStyle}
+    >
       {loading ? (
         <div className="loading" />
       ) : (

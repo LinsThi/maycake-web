@@ -3,11 +3,10 @@ import { shade } from 'polished';
 
 interface ButtonProps {
   isSmall?: boolean;
+  isReverse?: boolean;
 }
 
 export const Container = styled.button<ButtonProps>`
-  margin-top: 24px;
-  margin-bottom: 24px;
   padding: 6px;
   width: 100%;
 
@@ -25,7 +24,7 @@ export const Container = styled.button<ButtonProps>`
   transition: background-color 0.2s;
 
   &:hover {
-    background: ${shade(0.2, '#FFE1E3')};
+    background: ${shade(0.2, '#c5c5c5')};
   }
 
   .loading {
@@ -50,6 +49,17 @@ export const Container = styled.button<ButtonProps>`
       margin-left: 30px;
       svg {
         margin-right: 10px;
+      }
+    `}
+
+  ${(props) =>
+    props.isReverse &&
+    css`
+      background: #c2185b;
+      color: #fff;
+
+      &:hover {
+        background: ${shade(0.2, 'red')};
       }
     `}
 
