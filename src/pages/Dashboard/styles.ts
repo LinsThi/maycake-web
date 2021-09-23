@@ -77,7 +77,8 @@ export const ListProduct = styled.div`
   .products {
     display: flex;
     flex-wrap: wrap;
-    height: calc(100% - 260px);
+    height: calc(100% - 260px); // Arrumar o espaçamento branco da last linha
+    min-height: 280px; // Linha adicionada
     overflow-y: auto;
 
     margin-top: 45px;
